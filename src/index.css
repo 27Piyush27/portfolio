@@ -196,8 +196,8 @@ html.lenis body {
   }
 
   .will-change-transform {
-    will-change: transform;
-    transform: translateZ(0);
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
   }
 
   h1, h2, h3, h4, h5, h6 {

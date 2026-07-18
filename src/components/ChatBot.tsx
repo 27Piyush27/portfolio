@@ -76,6 +76,30 @@ export const ChatBot = () => {
             const content = parsed.choices?.[0]?.delta?.content;
             if (content) {
               assistantSoFar += content;
+              
+              // Agentic UI Action interceptor
+              const actionMatch = assistantSoFar.match(/\[ACTION:\s*(.*?)\]/);
+              if (actionMatch) {
+                const action = actionMatch[1];
+                // Remove the action from the buffer entirely so it triggers once and stays hidden
+                assistantSoFar = assistantSoFar.replace(actionMatch[0], "").trim();
+                
+                // Execute UI side-effects
+                setTimeout(() => {
+                  if (action === "SCROLL_TO_PROJECTS") {
+                    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                  } else if (action === "SCROLL_TO_EXPERIENCE") {
+                    document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" });
+                  } else if (action === "SCROLL_TO_AI_LAB") {
+                    document.getElementById("ai-projects")?.scrollIntoView({ behavior: "smooth" });
+                  } else if (action === "SCROLL_TO_CONTACT") {
+                    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                  } else if (action === "SCROLL_TO_ARCADE") {
+                    document.getElementById("arcade")?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }, 100);
+              }
+
               setMessages((prev) => {
                 const last = prev[prev.length - 1];
                 if (last?.role === "assistant") {

@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, Suspense, lazy, memo, useCallback, useMemo } from "react";
 import AIExperienceLab from "@/components/AIExperienceLab";
+const LiveAIProjects = lazy(() => import("@/components/LiveAIProjects"));
+const MiniGames = lazy(() => import("@/components/MiniGames"));
 import { ChatBot } from "@/components/ChatBot";
 import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence, useMotionValueEvent, useVelocity } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -680,10 +682,12 @@ const OptimizedPortfolio = () => {
     { name: "About", href: "about" },
     { name: "Capabilities", href: "capabilities" },
     { name: "AI Lab", href: "ai-lab" },
+    { name: "AI Projects", href: "ai-projects" },
     { name: "Experience", href: "experience" },
     { name: "Skills", href: "skills" },
     { name: "Services", href: "services" },
     { name: "Projects", href: "projects" },
+    { name: "Arcade", href: "arcade" },
     { name: "Testimonials", href: "testimonials" },
     { name: "Certificates", href: "certificates" },
     { name: "Internships", href: "internships" },
@@ -1069,7 +1073,7 @@ const OptimizedPortfolio = () => {
 
                 <motion.div className="grid grid-cols-2 gap-4" variants={staggerContainer}>
                   {[
-                    { icon: <GraduationCap className="h-5 w-5" />, title: "Education", desc: "B.Tech at JUIT Solan" },
+                    { icon: <GraduationCap className="h-5 w-5" />, title: "Education", desc: "B.Tech CSE at JUIT (2022-2026)" },
                     { icon: <MapPin className="h-5 w-5" />, title: "Location", desc: "Himachal Pradesh" },
                   ].map((item, i) => (
                     <TiltCard key={i} tiltStrength={8} glare>
@@ -1209,6 +1213,12 @@ const OptimizedPortfolio = () => {
 
         <SectionDivider />
 
+        <Suspense fallback={<div className="h-[600px] w-full flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>}>
+          <LiveAIProjects />
+        </Suspense>
+
+        <SectionDivider />
+
         {/* ===== EXPERIENCE — Animated Timeline ===== */}
         <AnimatedSection id="experience" className="py-32 px-6 bg-muted/30">
           <div className="max-w-5xl mx-auto">
@@ -1239,7 +1249,7 @@ const OptimizedPortfolio = () => {
                 {[
                   { title: "Frontend Developer", company: "Freelance", period: "2022 – Present", desc: "Developed responsive web applications using React, JavaScript, and modern CSS frameworks.", icon: <Briefcase className="h-4 w-4" /> },
                   { title: "Web Development Intern", company: "Various Companies", period: "2023", desc: "Gained hands-on experience in full-stack development with MERN stack technologies.", icon: <Code2 className="h-4 w-4" /> },
-                  { title: "B.Tech Student", company: "JUIT Solan", period: "2021 – Present", desc: "Pursuing Bachelor's in Technology with focus on Computer Science.", icon: <GraduationCap className="h-4 w-4" /> },
+                  { title: "B.Tech CSE", company: "JUIT Solan", period: "2022 – 2026", desc: "Pursuing Bachelor's in Technology with a focus on Computer Science and Engineering.", icon: <GraduationCap className="h-4 w-4" /> },
                 ].map((exp, i) => (
                   <motion.div
                     key={i}
@@ -1387,7 +1397,7 @@ const OptimizedPortfolio = () => {
                 {[
                   { title: "AI Data Analytics", desc: "An ML-powered analytics workspace for insight delivery, performance monitoring, and visual storytelling.", tags: ["Python", "ML", "React"], building: false },
                   { title: "LLM Portfolio Assistant", desc: "Streaming portfolio assistant built for fast, contextual responses about projects, skills, and AI work.", tags: ["Lovable AI", "Streaming", "React"] },
-                  { title: "GMR & Associates", desc: "Professional CA firm website with modern design, fast UI, and polished product presentation.", tags: ["React", "UI/UX", "Tailwind"], building: true },
+                  { title: "GMR India & Associates", desc: "Full-stack AI-based website for GMR India, a professional CA firm, featuring intelligent client interactions and modern UI.", tags: ["React", "AI", "Fullstack"], link: "https://gmr-associates.vercel.app/" },
                   { title: "E-Commerce Platform", desc: "Full-stack commerce system with scalable architecture, UX polish, and operational flows.", tags: ["React", "Node.js", "MongoDB"] },
                 ].map((project, i) => (
                 <motion.div key={i} variants={clipReveal}>
@@ -1431,10 +1441,19 @@ const OptimizedPortfolio = () => {
                         ))}
                       </div>
                       <MagneticButton strength={0.15} className="w-full">
-                        <Button variant="outline" className="w-full rounded-full hover:bg-foreground hover:text-background transition-all text-sm press-effect border-border/50">
-                          <ExternalLink className="h-3.5 w-3.5 mr-2" />
-                          {project.building ? "Coming Soon" : "View Project"}
-                        </Button>
+                        {project.link ? (
+                          <Button variant="outline" className="w-full rounded-full hover:bg-foreground hover:text-background transition-all text-sm press-effect border-border/50" asChild>
+                            <a href={project.link} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="h-3.5 w-3.5 mr-2" />
+                              View Project
+                            </a>
+                          </Button>
+                        ) : (
+                          <Button variant="outline" className="w-full rounded-full hover:bg-foreground hover:text-background transition-all text-sm press-effect border-border/50">
+                            <ExternalLink className="h-3.5 w-3.5 mr-2" />
+                            {project.building ? "Coming Soon" : "View Project"}
+                          </Button>
+                        )}
                       </MagneticButton>
                     </motion.div>
                   </TiltCard>
@@ -1460,6 +1479,12 @@ const OptimizedPortfolio = () => {
             </motion.div>
           </div>
         </AnimatedSection>
+
+        <SectionDivider />
+
+        <Suspense fallback={<div className="h-[600px] w-full flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>}>
+          <MiniGames />
+        </Suspense>
 
         <SectionDivider />
 

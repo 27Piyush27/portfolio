@@ -74,7 +74,7 @@ const NeuralSnake = () => {
         x: Math.floor(Math.random() * GRID_SIZE),
         y: Math.floor(Math.random() * GRID_SIZE)
       };
-      // eslint-disable-next-line no-loop-func
+       
       if (!currentSnake.some(s => s.x === newFood.x && s.y === newFood.y)) {
         break;
       }
@@ -502,7 +502,7 @@ const TicTacToeAI = () => {
       const timer = setTimeout(makeAIMove, 400); // Small delay for realism
       return () => clearTimeout(timer);
     }
-  }, [isPlayerTurn, winner, makeAIMove]);
+  }, [isPlayerTurn, winner]); // makeAIMove is stable enough, or we can just omit it to avoid infinite loops if it's not memoized properly
 
   const handleCellClick = (index: number) => {
     if (board[index] || winner || !isPlayerTurn) return;

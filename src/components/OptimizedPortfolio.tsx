@@ -169,7 +169,7 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
       });
     }, 25);
     return () => clearInterval(timer);
-  }, []);
+  }, [onComplete]);
 
   return (
     <motion.div
@@ -782,7 +782,7 @@ const OptimizedPortfolio = () => {
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
                     className={`text-xs px-3 py-2 rounded-full transition-all duration-300 relative ${
-                      activeSection === item.href ? "text-background" : "text-muted-foreground hover:text-foreground"
+                      activeSection === item.href ? "text-primary-foreground font-medium" : "text-muted-foreground hover:text-foreground"
                     }`}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -790,7 +790,7 @@ const OptimizedPortfolio = () => {
                   >
                     {activeSection === item.href && (
                       <motion.div
-                          className="absolute inset-0 rounded-full bg-foreground shadow-[0_10px_30px_hsl(var(--foreground)/0.18)]"
+                          className="absolute inset-0 rounded-full bg-primary shadow-[0_10px_30px_hsl(var(--primary)/0.3)]"
                         layoutId="activeNavPill"
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />

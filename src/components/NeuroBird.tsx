@@ -33,7 +33,7 @@ class NeuralNetwork {
 
   predict(inputs: number[]) {
     // Hidden layer
-    let hidden = [];
+    const hidden = [];
     for (let i = 0; i < this.hiddenNodes; i++) {
       let sum = 0;
       for (let j = 0; j < this.inputNodes; j++) {
@@ -44,7 +44,7 @@ class NeuralNetwork {
     }
 
     // Output layer
-    let outputs = [];
+    const outputs = [];
     for (let i = 0; i < this.outputNodes; i++) {
       let sum = 0;
       for (let j = 0; j < this.hiddenNodes; j++) {
@@ -58,7 +58,7 @@ class NeuralNetwork {
   }
 
   copy() {
-    let nn = new NeuralNetwork(this.inputNodes, this.hiddenNodes, this.outputNodes);
+    const nn = new NeuralNetwork(this.inputNodes, this.hiddenNodes, this.outputNodes);
     nn.weights_ih = this.weights_ih.map(row => [...row]);
     nn.weights_ho = this.weights_ho.map(row => [...row]);
     nn.bias_h = [...this.bias_h];
@@ -121,7 +121,7 @@ class Bird {
     let closest = null;
     let closestD = Infinity;
     for (let i = 0; i < pipes.length; i++) {
-      let d = (pipes[i].x + PIPE_WIDTH) - this.x;
+      const d = (pipes[i].x + PIPE_WIDTH) - this.x;
       if (d > 0 && d < closestD) {
         closest = pipes[i];
         closestD = d;
@@ -130,14 +130,14 @@ class Bird {
 
     if (closest != null) {
       // Normalize inputs between 0 and 1
-      let inputs = [];
+      const inputs = [];
       inputs[0] = this.y / CANVAS_H;
       inputs[1] = (this.velocity + 20) / 40; // Normalize velocity
       inputs[2] = closest.x / CANVAS_W;
       inputs[3] = closest.top / CANVAS_H;
       inputs[4] = closest.bottom / CANVAS_H;
 
-      let output = this.brain.predict(inputs);
+      const output = this.brain.predict(inputs);
       if (output[0] > 0.5) {
         this.up();
       }
@@ -223,10 +223,10 @@ export const NeuroBird = () => {
     
     // Calculate fitness
     let sum = 0;
-    for (let bird of state.current.savedBirds) {
+    for (const bird of state.current.savedBirds) {
       sum += bird.score;
     }
-    for (let bird of state.current.savedBirds) {
+    for (const bird of state.current.savedBirds) {
       bird.fitness = bird.score / sum;
     }
 
@@ -239,8 +239,8 @@ export const NeuroBird = () => {
         index++;
       }
       index = Math.max(0, Math.min(index - 1, state.current.savedBirds.length - 1));
-      let bird = state.current.savedBirds[index];
-      let child = new Bird(bird.brain);
+      const bird = state.current.savedBirds[index];
+      const child = new Bird(bird.brain);
       child.brain.mutate(0.1);
       return child;
     };
@@ -308,7 +308,7 @@ export const NeuroBird = () => {
 
       let currentMaxScore = 0;
       for (let i = state.current.birds.length - 1; i >= 0; i--) {
-        let bird = state.current.birds[i];
+        const bird = state.current.birds[i];
         if (bird.dead) {
           state.current.savedBirds.push(state.current.birds.splice(i, 1)[0]);
         } else {

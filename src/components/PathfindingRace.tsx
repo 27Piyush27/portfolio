@@ -44,7 +44,7 @@ export const PathfindingRace = () => {
   const initGrid = useCallback(() => {
     const newGrid: CellState[][] = [];
     for (let r = 0; r < GRID_ROWS; r++) {
-      let row: CellState[] = [];
+      const row: CellState[] = [];
       for (let c = 0; c < GRID_COLS; c++) {
         if (r === startNode.r && c === startNode.c) row.push("start");
         else if (r === endNode.r && c === endNode.c) row.push("end");
@@ -194,7 +194,7 @@ export const PathfindingRace = () => {
     const getNeighbors = (p: Point, gridState: CellState[][]) => {
       const dirs = [[1,0], [-1,0], [0,1], [0,-1]];
       const result: Point[] = [];
-      for (let d of dirs) {
+      for (const d of dirs) {
         const nr = p.r + d[0];
         const nc = p.c + d[1];
         if (nr >= 0 && nr < GRID_ROWS && nc >= 0 && nc < GRID_COLS && gridState[nr][nc] !== "wall") {
@@ -207,7 +207,7 @@ export const PathfindingRace = () => {
     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
     // Race Loop
-    let currentGrid = gridRef.current.map(row => [...row]);
+    const currentGrid = gridRef.current.map(row => [...row]);
     // Clear paths in local copy too
     for (let r=0; r<GRID_ROWS; r++) {
       for (let c=0; c<GRID_COLS; c++) {
@@ -236,7 +236,7 @@ export const PathfindingRace = () => {
           }
           
           const neighbors = getNeighbors(current, currentGrid);
-          for (let next of neighbors) {
+          for (const next of neighbors) {
             const newCost = costSoFarA.get(`${current.r},${current.c}`)! + 1;
             const nextStr = `${next.r},${next.c}`;
             if (!costSoFarA.has(nextStr) || newCost < costSoFarA.get(nextStr)!) {
@@ -263,7 +263,7 @@ export const PathfindingRace = () => {
             }
             
             const neighbors = getNeighbors(current, currentGrid);
-            for (let next of neighbors) {
+            for (const next of neighbors) {
               const newCost = costSoFarD.get(`${current.r},${current.c}`)! + 1;
               const nextStr = `${next.r},${next.c}`;
               if (!costSoFarD.has(nextStr) || newCost < costSoFarD.get(nextStr)!) {
